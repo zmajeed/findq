@@ -1,11 +1,11 @@
-#ifndef FQPARSER_LEXER_H
-#define FQPARSER_LEXER_H
-// fqparser_lexer.h
+#ifndef FINDQ_LEXER_GUARD
+#define FINDQ_LEXER_GUARD
+// findq_lexer_guard.h
 
 /*
 MIT License
 
-Copyright (c) 2024 Zartaj Majeed
+Copyright (c) 2024-2026 Zartaj Majeed
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -26,41 +26,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "fqparser_guard_flexlexer.h"
-#include "fqparser.bison.h"
-
-namespace fqparser {
-using namespace std;
-
-class Lexer: public yyFlexLexer {
-public:
-
-// can only declare here since flex generates the implementation
-  FQParser::symbol_type yylex(location&);
-
-  Lexer() = default;
-
-  explicit Lexer(istream& yyin_arg): yyFlexLexer(&yyin_arg) {}
-
-  enum class State {
-// lexer state to match and return a string argument token
-    stringArg,
-// lexer state to match and return a number argument token
-    numberArg,
-    execArgs,
-  };
-
-  int setState(State);
-  void unsetState();
-
-private:
-
-  using yyFlexLexer::yylex;
-
-};
-
-}
-
+// make sure redefinition happens just once using FlexLexer.h macro that guards yyFlexLexer class definition
+#ifndef yyFlexLexerOnce
+#  undef yyFlexLexer
+#  define yyFlexLexer FindqFlexLexer
+#  include "FlexLexer.h"
 #endif
 
+#endif
 

@@ -1,11 +1,11 @@
-#ifndef FQPARSER_LEXER_METHODS_H
-#define FQPARSER_LEXER_METHODS_H
-// fqparser_lexer_methods.h
+#ifndef FINDQ_LEXER_METHODS_H
+#define FINDQ_LEXER_METHODS_H
+// findq_lexer_methods.h
 
 /*
 MIT License
 
-Copyright (c) 2024 Zartaj Majeed
+Copyright (c) 2024-2026 Zartaj Majeed
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -31,10 +31,10 @@ file to #include in flex .l epilog because it needs symbols in .cpp file generat
 can be named .h or .cpp
 */
 
-#include "lexer/fqparser_lexer.h"
-#include "fqparser.bison.h"
+#include "lexer/findq_lexer.h"
+#include "findq_parser.bison.h"
 
-namespace fqparser {
+namespace findqparser {
 using namespace std;
 
 int Lexer::setState(const State state) {

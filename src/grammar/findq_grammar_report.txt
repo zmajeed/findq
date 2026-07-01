@@ -1,0 +1,2204 @@
+Grammar
+
+    0 $accept: findq $end
+
+    1 findq: find_commands
+
+    2 find_commands: find_command
+    3              | find_commands find_command
+
+    4 find_command: "find" binary_expression
+    5             | "find" starting_points binary_expression
+
+    6 starting_points: STARTING_POINT
+    7                | starting_points STARTING_POINT
+
+    8 binary_expression: and_expression
+    9                  | or_expression
+   10                  | comma_expression
+
+   11 and_expression: unary_expression
+   12               | and_expression and_operator unary_expression
+
+   13 and_operator: ε
+   14             | "-and"
+
+   15 or_expression: binary_expression "-or" and_expression
+
+   16 comma_expression: binary_expression "," and_expression
+
+   17 unary_expression: primary
+   18                 | "-not" primary
+   19                 | group
+
+   20 group: "(" binary_expression ")"
+
+   21 primary: test
+   22        | action
+   23        | global_option
+   24        | positional_option
+
+   25 test: "-amin" number_arg
+   26     | "-anewer" string_arg
+   27     | "-atime" number_arg
+   28     | "-cmin" number_arg
+   29     | "-cnewer" string_arg
+   30     | "-ctime" number_arg
+   31     | "-empty"
+   32     | "-executable"
+   33     | "-false"
+   34     | "-fstype" string_arg
+   35     | "-gid" number_arg
+   36     | "-group" string_arg
+   37     | "-ilname" string_arg
+   38     | "-iname" string_arg
+   39     | "-inum" number_arg
+   40     | "-ipath" string_arg
+   41     | "-iregex" string_arg
+   42     | "-iwholename" string_arg
+   43     | "-links" number_arg
+   44     | "-lname" string_arg
+   45     | "-mmin" number_arg
+   46     | "-mtime" number_arg
+   47     | "-name" string_arg
+   48     | "-newer" string_arg
+   49     | "-newerXY" string_arg
+   50     | "-nogroup"
+   51     | "-nouser"
+   52     | "-path" string_arg
+   53     | "-perm" string_arg
+   54     | "-readable"
+   55     | "-regex" string_arg
+   56     | "-samefile"
+   57     | "-size" number_arg
+   58     | "-true"
+   59     | "-type" string_arg
+   60     | "-uid" number_arg
+   61     | "-used" number_arg
+   62     | "-user" string_arg
+   63     | "-wholename" string_arg
+   64     | "-writable"
+   65     | "-xtype" string_arg
+
+   66 action: "-delete"
+   67       | "-exec" exec_args
+   68       | "-execdir" exec_args
+   69       | "-fls" string_arg
+   70       | "-fprint" string_arg
+   71       | "-fprint0" string_arg
+   72       | "-fprintf" string_arg
+   73       | "-ls"
+   74       | "-ok" exec_args
+   75       | "-okdir" exec_args
+   76       | "-print"
+   77       | "-print0"
+   78       | "-printf" string_arg
+   79       | "-prune"
+   80       | "-quit"
+
+   81 global_option: "-depth"
+   82              | "-files0-from" string_arg
+   83              | "-help"
+   84              | "-ignore_readdir_race"
+   85              | "-maxdepth" number_arg
+   86              | "-mindepth" number_arg
+   87              | "-mount"
+   88              | "-noignore_readdir_race"
+   89              | "-noleaf"
+   90              | "-xdev"
+
+   91 positional_option: "-daystart"
+   92                  | "-follow"
+   93                  | "-nowarn"
+   94                  | "-regextype" string_arg
+   95                  | "-warn"
+
+   96 string_arg: set_lexer_string_state "string" unset_lexer_state
+
+   97 number_arg: set_lexer_number_state "number" unset_lexer_state
+
+   98 exec_args: set_lexer_exec_state strings ";" unset_lexer_state
+
+   99 strings: "string"
+  100        | strings "string"
+
+  101 set_lexer_string_state: ε
+
+  102 set_lexer_number_state: ε
+
+  103 set_lexer_exec_state: ε
+
+  104 unset_lexer_state: ε
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    "find" (258) 4 5
+    "-amin" (259) 25
+    "-anewer" (260) 26
+    "-atime" (261) 27
+    "-cmin" (262) 28
+    "-cnewer" (263) 29
+    "-ctime" (264) 30
+    "-empty" (265) 31
+    "-executable" (266) 32
+    "-false" (267) 33
+    "-fstype" (268) 34
+    "-gid" (269) 35
+    "-group" (270) 36
+    "-ilname" (271) 37
+    "-iname" (272) 38
+    "-inum" (273) 39
+    "-ipath" (274) 40
+    "-iregex" (275) 41
+    "-iwholename" (276) 42
+    "-links" (277) 43
+    "-lname" (278) 44
+    "-mmin" (279) 45
+    "-mtime" (280) 46
+    "-name" (281) 47
+    "-newer" (282) 48
+    "-newerXY" (283) 49
+    "-nogroup" (284) 50
+    "-nouser" (285) 51
+    "-path" (286) 52
+    "-perm" (287) 53
+    "-readable" (288) 54
+    "-regex" (289) 55
+    "-samefile" (290) 56
+    "-size" (291) 57
+    "-true" (292) 58
+    "-type" (293) 59
+    "-uid" (294) 60
+    "-used" (295) 61
+    "-user" (296) 62
+    "-wholename" (297) 63
+    "-writable" (298) 64
+    "-xtype" (299) 65
+    "-delete" (300) 66
+    "-exec" (301) 67
+    "-execdir" (302) 68
+    "-fls" (303) 69
+    "-fprint" (304) 70
+    "-fprint0" (305) 71
+    "-fprintf" (306) 72
+    "-ls" (307) 73
+    "-ok" (308) 74
+    "-okdir" (309) 75
+    "-print" (310) 76
+    "-print0" (311) 77
+    "-printf" (312) 78
+    "-prune" (313) 79
+    "-quit" (314) 80
+    "-depth" (315) 81
+    "-files0-from" (316) 82
+    "-help" (317) 83
+    "-ignore_readdir_race" (318) 84
+    "-maxdepth" (319) 85
+    "-mindepth" (320) 86
+    "-mount" (321) 87
+    "-noignore_readdir_race" (322) 88
+    "-noleaf" (323) 89
+    "-xdev" (324) 90
+    "-daystart" (325) 91
+    "-follow" (326) 92
+    "-nowarn" (327) 93
+    "-regextype" (328) 94
+    "-warn" (329) 95
+    "-not" (330) 18
+    "-and" (331) 14
+    "-or" (332) 15
+    "," (333) 16
+    "(" (334) 20
+    ")" (335) 20
+    ";" (336) 98
+    "number" <NumberArg> (337) 97
+    "string" <string> (338) 96 99 100
+    STARTING_POINT <string> (339) 6 7
+
+
+Nonterminals, with rules where they appear
+
+    $accept (85)
+        on left: 0
+    findq (86)
+        on left: 1
+        on right: 0
+    find_commands (87)
+        on left: 2 3
+        on right: 1 3
+    find_command (88)
+        on left: 4 5
+        on right: 2 3
+    starting_points (89)
+        on left: 6 7
+        on right: 5 7
+    binary_expression (90)
+        on left: 8 9 10
+        on right: 4 5 15 16 20
+    and_expression (91)
+        on left: 11 12
+        on right: 8 12 15 16
+    and_operator (92)
+        on left: 13 14
+        on right: 12
+    or_expression (93)
+        on left: 15
+        on right: 9
+    comma_expression (94)
+        on left: 16
+        on right: 10
+    unary_expression (95)
+        on left: 17 18 19
+        on right: 11 12
+    group (96)
+        on left: 20
+        on right: 19
+    primary (97)
+        on left: 21 22 23 24
+        on right: 17 18
+    test (98)
+        on left: 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65
+        on right: 21
+    action (99)
+        on left: 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80
+        on right: 22
+    global_option (100)
+        on left: 81 82 83 84 85 86 87 88 89 90
+        on right: 23
+    positional_option (101)
+        on left: 91 92 93 94 95
+        on right: 24
+    string_arg (102)
+        on left: 96
+        on right: 26 29 34 36 37 38 40 41 42 44 47 48 49 52 53 55 59 62 63 65 69 70 71 72 78 82 94
+    number_arg (103)
+        on left: 97
+        on right: 25 27 28 30 35 39 43 45 46 57 60 61 85 86
+    exec_args (104)
+        on left: 98
+        on right: 67 68 74 75
+    strings (105)
+        on left: 99 100
+        on right: 98 100
+    set_lexer_string_state (106)
+        on left: 101
+        on right: 96
+    set_lexer_number_state (107)
+        on left: 102
+        on right: 97
+    set_lexer_exec_state (108)
+        on left: 103
+        on right: 98
+    unset_lexer_state (109)
+        on left: 104
+        on right: 96 97 98
+
+
+State 0
+
+    0 $accept: • findq $end
+
+    "find"  shift, and go to state 1
+
+    findq          go to state 2
+    find_commands  go to state 3
+    find_command   go to state 4
+
+
+State 1
+
+    4 find_command: "find" • binary_expression
+    5             | "find" • starting_points binary_expression
+
+    "-amin"                   shift, and go to state 5
+    "-anewer"                 shift, and go to state 6
+    "-atime"                  shift, and go to state 7
+    "-cmin"                   shift, and go to state 8
+    "-cnewer"                 shift, and go to state 9
+    "-ctime"                  shift, and go to state 10
+    "-empty"                  shift, and go to state 11
+    "-executable"             shift, and go to state 12
+    "-false"                  shift, and go to state 13
+    "-fstype"                 shift, and go to state 14
+    "-gid"                    shift, and go to state 15
+    "-group"                  shift, and go to state 16
+    "-ilname"                 shift, and go to state 17
+    "-iname"                  shift, and go to state 18
+    "-inum"                   shift, and go to state 19
+    "-ipath"                  shift, and go to state 20
+    "-iregex"                 shift, and go to state 21
+    "-iwholename"             shift, and go to state 22
+    "-links"                  shift, and go to state 23
+    "-lname"                  shift, and go to state 24
+    "-mmin"                   shift, and go to state 25
+    "-mtime"                  shift, and go to state 26
+    "-name"                   shift, and go to state 27
+    "-newer"                  shift, and go to state 28
+    "-newerXY"                shift, and go to state 29
+    "-nogroup"                shift, and go to state 30
+    "-nouser"                 shift, and go to state 31
+    "-path"                   shift, and go to state 32
+    "-perm"                   shift, and go to state 33
+    "-readable"               shift, and go to state 34
+    "-regex"                  shift, and go to state 35
+    "-samefile"               shift, and go to state 36
+    "-size"                   shift, and go to state 37
+    "-true"                   shift, and go to state 38
+    "-type"                   shift, and go to state 39
+    "-uid"                    shift, and go to state 40
+    "-used"                   shift, and go to state 41
+    "-user"                   shift, and go to state 42
+    "-wholename"              shift, and go to state 43
+    "-writable"               shift, and go to state 44
+    "-xtype"                  shift, and go to state 45
+    "-delete"                 shift, and go to state 46
+    "-exec"                   shift, and go to state 47
+    "-execdir"                shift, and go to state 48
+    "-fls"                    shift, and go to state 49
+    "-fprint"                 shift, and go to state 50
+    "-fprint0"                shift, and go to state 51
+    "-fprintf"                shift, and go to state 52
+    "-ls"                     shift, and go to state 53
+    "-ok"                     shift, and go to state 54
+    "-okdir"                  shift, and go to state 55
+    "-print"                  shift, and go to state 56
+    "-print0"                 shift, and go to state 57
+    "-printf"                 shift, and go to state 58
+    "-prune"                  shift, and go to state 59
+    "-quit"                   shift, and go to state 60
+    "-depth"                  shift, and go to state 61
+    "-files0-from"            shift, and go to state 62
+    "-help"                   shift, and go to state 63
+    "-ignore_readdir_race"    shift, and go to state 64
+    "-maxdepth"               shift, and go to state 65
+    "-mindepth"               shift, and go to state 66
+    "-mount"                  shift, and go to state 67
+    "-noignore_readdir_race"  shift, and go to state 68
+    "-noleaf"                 shift, and go to state 69
+    "-xdev"                   shift, and go to state 70
+    "-daystart"               shift, and go to state 71
+    "-follow"                 shift, and go to state 72
+    "-nowarn"                 shift, and go to state 73
+    "-regextype"              shift, and go to state 74
+    "-warn"                   shift, and go to state 75
+    "-not"                    shift, and go to state 76
+    "("                       shift, and go to state 77
+    STARTING_POINT            shift, and go to state 78
+
+    starting_points    go to state 79
+    binary_expression  go to state 80
+    and_expression     go to state 81
+    or_expression      go to state 82
+    comma_expression   go to state 83
+    unary_expression   go to state 84
+    group              go to state 85
+    primary            go to state 86
+    test               go to state 87
+    action             go to state 88
+    global_option      go to state 89
+    positional_option  go to state 90
+
+
+State 2
+
+    0 $accept: findq • $end
+
+    $end  shift, and go to state 91
+
+
+State 3
+
+    1 findq: find_commands •  [$end]
+    3 find_commands: find_commands • find_command
+
+    "find"  shift, and go to state 1
+
+    $default  reduce using rule 1 (findq)
+
+    find_command  go to state 92
+
+
+State 4
+
+    2 find_commands: find_command •
+
+    $default  reduce using rule 2 (find_commands)
+
+
+State 5
+
+   25 test: "-amin" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 93
+    set_lexer_number_state  go to state 94
+
+
+State 6
+
+   26 test: "-anewer" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 95
+    set_lexer_string_state  go to state 96
+
+
+State 7
+
+   27 test: "-atime" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 97
+    set_lexer_number_state  go to state 94
+
+
+State 8
+
+   28 test: "-cmin" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 98
+    set_lexer_number_state  go to state 94
+
+
+State 9
+
+   29 test: "-cnewer" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 99
+    set_lexer_string_state  go to state 96
+
+
+State 10
+
+   30 test: "-ctime" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 100
+    set_lexer_number_state  go to state 94
+
+
+State 11
+
+   31 test: "-empty" •
+
+    $default  reduce using rule 31 (test)
+
+
+State 12
+
+   32 test: "-executable" •
+
+    $default  reduce using rule 32 (test)
+
+
+State 13
+
+   33 test: "-false" •
+
+    $default  reduce using rule 33 (test)
+
+
+State 14
+
+   34 test: "-fstype" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 101
+    set_lexer_string_state  go to state 96
+
+
+State 15
+
+   35 test: "-gid" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 102
+    set_lexer_number_state  go to state 94
+
+
+State 16
+
+   36 test: "-group" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 103
+    set_lexer_string_state  go to state 96
+
+
+State 17
+
+   37 test: "-ilname" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 104
+    set_lexer_string_state  go to state 96
+
+
+State 18
+
+   38 test: "-iname" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 105
+    set_lexer_string_state  go to state 96
+
+
+State 19
+
+   39 test: "-inum" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 106
+    set_lexer_number_state  go to state 94
+
+
+State 20
+
+   40 test: "-ipath" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 107
+    set_lexer_string_state  go to state 96
+
+
+State 21
+
+   41 test: "-iregex" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 108
+    set_lexer_string_state  go to state 96
+
+
+State 22
+
+   42 test: "-iwholename" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 109
+    set_lexer_string_state  go to state 96
+
+
+State 23
+
+   43 test: "-links" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 110
+    set_lexer_number_state  go to state 94
+
+
+State 24
+
+   44 test: "-lname" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 111
+    set_lexer_string_state  go to state 96
+
+
+State 25
+
+   45 test: "-mmin" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 112
+    set_lexer_number_state  go to state 94
+
+
+State 26
+
+   46 test: "-mtime" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 113
+    set_lexer_number_state  go to state 94
+
+
+State 27
+
+   47 test: "-name" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 114
+    set_lexer_string_state  go to state 96
+
+
+State 28
+
+   48 test: "-newer" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 115
+    set_lexer_string_state  go to state 96
+
+
+State 29
+
+   49 test: "-newerXY" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 116
+    set_lexer_string_state  go to state 96
+
+
+State 30
+
+   50 test: "-nogroup" •
+
+    $default  reduce using rule 50 (test)
+
+
+State 31
+
+   51 test: "-nouser" •
+
+    $default  reduce using rule 51 (test)
+
+
+State 32
+
+   52 test: "-path" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 117
+    set_lexer_string_state  go to state 96
+
+
+State 33
+
+   53 test: "-perm" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 118
+    set_lexer_string_state  go to state 96
+
+
+State 34
+
+   54 test: "-readable" •
+
+    $default  reduce using rule 54 (test)
+
+
+State 35
+
+   55 test: "-regex" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 119
+    set_lexer_string_state  go to state 96
+
+
+State 36
+
+   56 test: "-samefile" •
+
+    $default  reduce using rule 56 (test)
+
+
+State 37
+
+   57 test: "-size" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 120
+    set_lexer_number_state  go to state 94
+
+
+State 38
+
+   58 test: "-true" •
+
+    $default  reduce using rule 58 (test)
+
+
+State 39
+
+   59 test: "-type" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 121
+    set_lexer_string_state  go to state 96
+
+
+State 40
+
+   60 test: "-uid" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 122
+    set_lexer_number_state  go to state 94
+
+
+State 41
+
+   61 test: "-used" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 123
+    set_lexer_number_state  go to state 94
+
+
+State 42
+
+   62 test: "-user" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 124
+    set_lexer_string_state  go to state 96
+
+
+State 43
+
+   63 test: "-wholename" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 125
+    set_lexer_string_state  go to state 96
+
+
+State 44
+
+   64 test: "-writable" •
+
+    $default  reduce using rule 64 (test)
+
+
+State 45
+
+   65 test: "-xtype" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 126
+    set_lexer_string_state  go to state 96
+
+
+State 46
+
+   66 action: "-delete" •
+
+    $default  reduce using rule 66 (action)
+
+
+State 47
+
+   67 action: "-exec" • exec_args
+
+    $default  reduce using rule 103 (set_lexer_exec_state)
+
+    exec_args             go to state 127
+    set_lexer_exec_state  go to state 128
+
+
+State 48
+
+   68 action: "-execdir" • exec_args
+
+    $default  reduce using rule 103 (set_lexer_exec_state)
+
+    exec_args             go to state 129
+    set_lexer_exec_state  go to state 128
+
+
+State 49
+
+   69 action: "-fls" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 130
+    set_lexer_string_state  go to state 96
+
+
+State 50
+
+   70 action: "-fprint" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 131
+    set_lexer_string_state  go to state 96
+
+
+State 51
+
+   71 action: "-fprint0" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 132
+    set_lexer_string_state  go to state 96
+
+
+State 52
+
+   72 action: "-fprintf" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 133
+    set_lexer_string_state  go to state 96
+
+
+State 53
+
+   73 action: "-ls" •
+
+    $default  reduce using rule 73 (action)
+
+
+State 54
+
+   74 action: "-ok" • exec_args
+
+    $default  reduce using rule 103 (set_lexer_exec_state)
+
+    exec_args             go to state 134
+    set_lexer_exec_state  go to state 128
+
+
+State 55
+
+   75 action: "-okdir" • exec_args
+
+    $default  reduce using rule 103 (set_lexer_exec_state)
+
+    exec_args             go to state 135
+    set_lexer_exec_state  go to state 128
+
+
+State 56
+
+   76 action: "-print" •
+
+    $default  reduce using rule 76 (action)
+
+
+State 57
+
+   77 action: "-print0" •
+
+    $default  reduce using rule 77 (action)
+
+
+State 58
+
+   78 action: "-printf" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 136
+    set_lexer_string_state  go to state 96
+
+
+State 59
+
+   79 action: "-prune" •
+
+    $default  reduce using rule 79 (action)
+
+
+State 60
+
+   80 action: "-quit" •
+
+    $default  reduce using rule 80 (action)
+
+
+State 61
+
+   81 global_option: "-depth" •
+
+    $default  reduce using rule 81 (global_option)
+
+
+State 62
+
+   82 global_option: "-files0-from" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 137
+    set_lexer_string_state  go to state 96
+
+
+State 63
+
+   83 global_option: "-help" •
+
+    $default  reduce using rule 83 (global_option)
+
+
+State 64
+
+   84 global_option: "-ignore_readdir_race" •
+
+    $default  reduce using rule 84 (global_option)
+
+
+State 65
+
+   85 global_option: "-maxdepth" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 138
+    set_lexer_number_state  go to state 94
+
+
+State 66
+
+   86 global_option: "-mindepth" • number_arg
+
+    $default  reduce using rule 102 (set_lexer_number_state)
+
+    number_arg              go to state 139
+    set_lexer_number_state  go to state 94
+
+
+State 67
+
+   87 global_option: "-mount" •
+
+    $default  reduce using rule 87 (global_option)
+
+
+State 68
+
+   88 global_option: "-noignore_readdir_race" •
+
+    $default  reduce using rule 88 (global_option)
+
+
+State 69
+
+   89 global_option: "-noleaf" •
+
+    $default  reduce using rule 89 (global_option)
+
+
+State 70
+
+   90 global_option: "-xdev" •
+
+    $default  reduce using rule 90 (global_option)
+
+
+State 71
+
+   91 positional_option: "-daystart" •
+
+    $default  reduce using rule 91 (positional_option)
+
+
+State 72
+
+   92 positional_option: "-follow" •
+
+    $default  reduce using rule 92 (positional_option)
+
+
+State 73
+
+   93 positional_option: "-nowarn" •
+
+    $default  reduce using rule 93 (positional_option)
+
+
+State 74
+
+   94 positional_option: "-regextype" • string_arg
+
+    $default  reduce using rule 101 (set_lexer_string_state)
+
+    string_arg              go to state 140
+    set_lexer_string_state  go to state 96
+
+
+State 75
+
+   95 positional_option: "-warn" •
+
+    $default  reduce using rule 95 (positional_option)
+
+
+State 76
+
+   18 unary_expression: "-not" • primary
+
+    "-amin"                   shift, and go to state 5
+    "-anewer"                 shift, and go to state 6
+    "-atime"                  shift, and go to state 7
+    "-cmin"                   shift, and go to state 8
+    "-cnewer"                 shift, and go to state 9
+    "-ctime"                  shift, and go to state 10
+    "-empty"                  shift, and go to state 11
+    "-executable"             shift, and go to state 12
+    "-false"                  shift, and go to state 13
+    "-fstype"                 shift, and go to state 14
+    "-gid"                    shift, and go to state 15
+    "-group"                  shift, and go to state 16
+    "-ilname"                 shift, and go to state 17
+    "-iname"                  shift, and go to state 18
+    "-inum"                   shift, and go to state 19
+    "-ipath"                  shift, and go to state 20
+    "-iregex"                 shift, and go to state 21
+    "-iwholename"             shift, and go to state 22
+    "-links"                  shift, and go to state 23
+    "-lname"                  shift, and go to state 24
+    "-mmin"                   shift, and go to state 25
+    "-mtime"                  shift, and go to state 26
+    "-name"                   shift, and go to state 27
+    "-newer"                  shift, and go to state 28
+    "-newerXY"                shift, and go to state 29
+    "-nogroup"                shift, and go to state 30
+    "-nouser"                 shift, and go to state 31
+    "-path"                   shift, and go to state 32
+    "-perm"                   shift, and go to state 33
+    "-readable"               shift, and go to state 34
+    "-regex"                  shift, and go to state 35
+    "-samefile"               shift, and go to state 36
+    "-size"                   shift, and go to state 37
+    "-true"                   shift, and go to state 38
+    "-type"                   shift, and go to state 39
+    "-uid"                    shift, and go to state 40
+    "-used"                   shift, and go to state 41
+    "-user"                   shift, and go to state 42
+    "-wholename"              shift, and go to state 43
+    "-writable"               shift, and go to state 44
+    "-xtype"                  shift, and go to state 45
+    "-delete"                 shift, and go to state 46
+    "-exec"                   shift, and go to state 47
+    "-execdir"                shift, and go to state 48
+    "-fls"                    shift, and go to state 49
+    "-fprint"                 shift, and go to state 50
+    "-fprint0"                shift, and go to state 51
+    "-fprintf"                shift, and go to state 52
+    "-ls"                     shift, and go to state 53
+    "-ok"                     shift, and go to state 54
+    "-okdir"                  shift, and go to state 55
+    "-print"                  shift, and go to state 56
+    "-print0"                 shift, and go to state 57
+    "-printf"                 shift, and go to state 58
+    "-prune"                  shift, and go to state 59
+    "-quit"                   shift, and go to state 60
+    "-depth"                  shift, and go to state 61
+    "-files0-from"            shift, and go to state 62
+    "-help"                   shift, and go to state 63
+    "-ignore_readdir_race"    shift, and go to state 64
+    "-maxdepth"               shift, and go to state 65
+    "-mindepth"               shift, and go to state 66
+    "-mount"                  shift, and go to state 67
+    "-noignore_readdir_race"  shift, and go to state 68
+    "-noleaf"                 shift, and go to state 69
+    "-xdev"                   shift, and go to state 70
+    "-daystart"               shift, and go to state 71
+    "-follow"                 shift, and go to state 72
+    "-nowarn"                 shift, and go to state 73
+    "-regextype"              shift, and go to state 74
+    "-warn"                   shift, and go to state 75
+
+    primary            go to state 141
+    test               go to state 87
+    action             go to state 88
+    global_option      go to state 89
+    positional_option  go to state 90
+
+
+State 77
+
+   20 group: "(" • binary_expression ")"
+
+    "-amin"                   shift, and go to state 5
+    "-anewer"                 shift, and go to state 6
+    "-atime"                  shift, and go to state 7
+    "-cmin"                   shift, and go to state 8
+    "-cnewer"                 shift, and go to state 9
+    "-ctime"                  shift, and go to state 10
+    "-empty"                  shift, and go to state 11
+    "-executable"             shift, and go to state 12
+    "-false"                  shift, and go to state 13
+    "-fstype"                 shift, and go to state 14
+    "-gid"                    shift, and go to state 15
+    "-group"                  shift, and go to state 16
+    "-ilname"                 shift, and go to state 17
+    "-iname"                  shift, and go to state 18
+    "-inum"                   shift, and go to state 19
+    "-ipath"                  shift, and go to state 20
+    "-iregex"                 shift, and go to state 21
+    "-iwholename"             shift, and go to state 22
+    "-links"                  shift, and go to state 23
+    "-lname"                  shift, and go to state 24
+    "-mmin"                   shift, and go to state 25
+    "-mtime"                  shift, and go to state 26
+    "-name"                   shift, and go to state 27
+    "-newer"                  shift, and go to state 28
+    "-newerXY"                shift, and go to state 29
+    "-nogroup"                shift, and go to state 30
+    "-nouser"                 shift, and go to state 31
+    "-path"                   shift, and go to state 32
+    "-perm"                   shift, and go to state 33
+    "-readable"               shift, and go to state 34
+    "-regex"                  shift, and go to state 35
+    "-samefile"               shift, and go to state 36
+    "-size"                   shift, and go to state 37
+    "-true"                   shift, and go to state 38
+    "-type"                   shift, and go to state 39
+    "-uid"                    shift, and go to state 40
+    "-used"                   shift, and go to state 41
+    "-user"                   shift, and go to state 42
+    "-wholename"              shift, and go to state 43
+    "-writable"               shift, and go to state 44
+    "-xtype"                  shift, and go to state 45
+    "-delete"                 shift, and go to state 46
+    "-exec"                   shift, and go to state 47
+    "-execdir"                shift, and go to state 48
+    "-fls"                    shift, and go to state 49
+    "-fprint"                 shift, and go to state 50
+    "-fprint0"                shift, and go to state 51
+    "-fprintf"                shift, and go to state 52
+    "-ls"                     shift, and go to state 53
+    "-ok"                     shift, and go to state 54
+    "-okdir"                  shift, and go to state 55
+    "-print"                  shift, and go to state 56
+    "-print0"                 shift, and go to state 57
+    "-printf"                 shift, and go to state 58
+    "-prune"                  shift, and go to state 59
+    "-quit"                   shift, and go to state 60
+    "-depth"                  shift, and go to state 61
+    "-files0-from"            shift, and go to state 62
+    "-help"                   shift, and go to state 63
+    "-ignore_readdir_race"    shift, and go to state 64
+    "-maxdepth"               shift, and go to state 65
+    "-mindepth"               shift, and go to state 66
+    "-mount"                  shift, and go to state 67
+    "-noignore_readdir_race"  shift, and go to state 68
+    "-noleaf"                 shift, and go to state 69
+    "-xdev"                   shift, and go to state 70
+    "-daystart"               shift, and go to state 71
+    "-follow"                 shift, and go to state 72
+    "-nowarn"                 shift, and go to state 73
+    "-regextype"              shift, and go to state 74
+    "-warn"                   shift, and go to state 75
+    "-not"                    shift, and go to state 76
+    "("                       shift, and go to state 77
+
+    binary_expression  go to state 142
+    and_expression     go to state 81
+    or_expression      go to state 82
+    comma_expression   go to state 83
+    unary_expression   go to state 84
+    group              go to state 85
+    primary            go to state 86
+    test               go to state 87
+    action             go to state 88
+    global_option      go to state 89
+    positional_option  go to state 90
+
+
+State 78
+
+    6 starting_points: STARTING_POINT •
+
+    $default  reduce using rule 6 (starting_points)
+
+
+State 79
+
+    5 find_command: "find" starting_points • binary_expression
+    7 starting_points: starting_points • STARTING_POINT
+
+    "-amin"                   shift, and go to state 5
+    "-anewer"                 shift, and go to state 6
+    "-atime"                  shift, and go to state 7
+    "-cmin"                   shift, and go to state 8
+    "-cnewer"                 shift, and go to state 9
+    "-ctime"                  shift, and go to state 10
+    "-empty"                  shift, and go to state 11
+    "-executable"             shift, and go to state 12
+    "-false"                  shift, and go to state 13
+    "-fstype"                 shift, and go to state 14
+    "-gid"                    shift, and go to state 15
+    "-group"                  shift, and go to state 16
+    "-ilname"                 shift, and go to state 17
+    "-iname"                  shift, and go to state 18
+    "-inum"                   shift, and go to state 19
+    "-ipath"                  shift, and go to state 20
+    "-iregex"                 shift, and go to state 21
+    "-iwholename"             shift, and go to state 22
+    "-links"                  shift, and go to state 23
+    "-lname"                  shift, and go to state 24
+    "-mmin"                   shift, and go to state 25
+    "-mtime"                  shift, and go to state 26
+    "-name"                   shift, and go to state 27
+    "-newer"                  shift, and go to state 28
+    "-newerXY"                shift, and go to state 29
+    "-nogroup"                shift, and go to state 30
+    "-nouser"                 shift, and go to state 31
+    "-path"                   shift, and go to state 32
+    "-perm"                   shift, and go to state 33
+    "-readable"               shift, and go to state 34
+    "-regex"                  shift, and go to state 35
+    "-samefile"               shift, and go to state 36
+    "-size"                   shift, and go to state 37
+    "-true"                   shift, and go to state 38
+    "-type"                   shift, and go to state 39
+    "-uid"                    shift, and go to state 40
+    "-used"                   shift, and go to state 41
+    "-user"                   shift, and go to state 42
+    "-wholename"              shift, and go to state 43
+    "-writable"               shift, and go to state 44
+    "-xtype"                  shift, and go to state 45
+    "-delete"                 shift, and go to state 46
+    "-exec"                   shift, and go to state 47
+    "-execdir"                shift, and go to state 48
+    "-fls"                    shift, and go to state 49
+    "-fprint"                 shift, and go to state 50
+    "-fprint0"                shift, and go to state 51
+    "-fprintf"                shift, and go to state 52
+    "-ls"                     shift, and go to state 53
+    "-ok"                     shift, and go to state 54
+    "-okdir"                  shift, and go to state 55
+    "-print"                  shift, and go to state 56
+    "-print0"                 shift, and go to state 57
+    "-printf"                 shift, and go to state 58
+    "-prune"                  shift, and go to state 59
+    "-quit"                   shift, and go to state 60
+    "-depth"                  shift, and go to state 61
+    "-files0-from"            shift, and go to state 62
+    "-help"                   shift, and go to state 63
+    "-ignore_readdir_race"    shift, and go to state 64
+    "-maxdepth"               shift, and go to state 65
+    "-mindepth"               shift, and go to state 66
+    "-mount"                  shift, and go to state 67
+    "-noignore_readdir_race"  shift, and go to state 68
+    "-noleaf"                 shift, and go to state 69
+    "-xdev"                   shift, and go to state 70
+    "-daystart"               shift, and go to state 71
+    "-follow"                 shift, and go to state 72
+    "-nowarn"                 shift, and go to state 73
+    "-regextype"              shift, and go to state 74
+    "-warn"                   shift, and go to state 75
+    "-not"                    shift, and go to state 76
+    "("                       shift, and go to state 77
+    STARTING_POINT            shift, and go to state 143
+
+    binary_expression  go to state 144
+    and_expression     go to state 81
+    or_expression      go to state 82
+    comma_expression   go to state 83
+    unary_expression   go to state 84
+    group              go to state 85
+    primary            go to state 86
+    test               go to state 87
+    action             go to state 88
+    global_option      go to state 89
+    positional_option  go to state 90
+
+
+State 80
+
+    4 find_command: "find" binary_expression •  [$end, "find"]
+   15 or_expression: binary_expression • "-or" and_expression
+   16 comma_expression: binary_expression • "," and_expression
+
+    "-or"  shift, and go to state 145
+    ","    shift, and go to state 146
+
+    $default  reduce using rule 4 (find_command)
+
+
+State 81
+
+    8 binary_expression: and_expression •  [$end, "find", "-or", ",", ")"]
+   12 and_expression: and_expression • and_operator unary_expression
+
+    "-and"  shift, and go to state 147
+
+    $end      reduce using rule 8 (binary_expression)
+    "find"    reduce using rule 8 (binary_expression)
+    "-or"     reduce using rule 8 (binary_expression)
+    ","       reduce using rule 8 (binary_expression)
+    ")"       reduce using rule 8 (binary_expression)
+    $default  reduce using rule 13 (and_operator)
+
+    and_operator  go to state 148
+
+
+State 82
+
+    9 binary_expression: or_expression •
+
+    $default  reduce using rule 9 (binary_expression)
+
+
+State 83
+
+   10 binary_expression: comma_expression •
+
+    $default  reduce using rule 10 (binary_expression)
+
+
+State 84
+
+   11 and_expression: unary_expression •
+
+    $default  reduce using rule 11 (and_expression)
+
+
+State 85
+
+   19 unary_expression: group •
+
+    $default  reduce using rule 19 (unary_expression)
+
+
+State 86
+
+   17 unary_expression: primary •
+
+    $default  reduce using rule 17 (unary_expression)
+
+
+State 87
+
+   21 primary: test •
+
+    $default  reduce using rule 21 (primary)
+
+
+State 88
+
+   22 primary: action •
+
+    $default  reduce using rule 22 (primary)
+
+
+State 89
+
+   23 primary: global_option •
+
+    $default  reduce using rule 23 (primary)
+
+
+State 90
+
+   24 primary: positional_option •
+
+    $default  reduce using rule 24 (primary)
+
+
+State 91
+
+    0 $accept: findq $end •
+
+    $default  accept
+
+
+State 92
+
+    3 find_commands: find_commands find_command •
+
+    $default  reduce using rule 3 (find_commands)
+
+
+State 93
+
+   25 test: "-amin" number_arg •
+
+    $default  reduce using rule 25 (test)
+
+
+State 94
+
+   97 number_arg: set_lexer_number_state • "number" unset_lexer_state
+
+    "number"  shift, and go to state 149
+
+
+State 95
+
+   26 test: "-anewer" string_arg •
+
+    $default  reduce using rule 26 (test)
+
+
+State 96
+
+   96 string_arg: set_lexer_string_state • "string" unset_lexer_state
+
+    "string"  shift, and go to state 150
+
+
+State 97
+
+   27 test: "-atime" number_arg •
+
+    $default  reduce using rule 27 (test)
+
+
+State 98
+
+   28 test: "-cmin" number_arg •
+
+    $default  reduce using rule 28 (test)
+
+
+State 99
+
+   29 test: "-cnewer" string_arg •
+
+    $default  reduce using rule 29 (test)
+
+
+State 100
+
+   30 test: "-ctime" number_arg •
+
+    $default  reduce using rule 30 (test)
+
+
+State 101
+
+   34 test: "-fstype" string_arg •
+
+    $default  reduce using rule 34 (test)
+
+
+State 102
+
+   35 test: "-gid" number_arg •
+
+    $default  reduce using rule 35 (test)
+
+
+State 103
+
+   36 test: "-group" string_arg •
+
+    $default  reduce using rule 36 (test)
+
+
+State 104
+
+   37 test: "-ilname" string_arg •
+
+    $default  reduce using rule 37 (test)
+
+
+State 105
+
+   38 test: "-iname" string_arg •
+
+    $default  reduce using rule 38 (test)
+
+
+State 106
+
+   39 test: "-inum" number_arg •
+
+    $default  reduce using rule 39 (test)
+
+
+State 107
+
+   40 test: "-ipath" string_arg •
+
+    $default  reduce using rule 40 (test)
+
+
+State 108
+
+   41 test: "-iregex" string_arg •
+
+    $default  reduce using rule 41 (test)
+
+
+State 109
+
+   42 test: "-iwholename" string_arg •
+
+    $default  reduce using rule 42 (test)
+
+
+State 110
+
+   43 test: "-links" number_arg •
+
+    $default  reduce using rule 43 (test)
+
+
+State 111
+
+   44 test: "-lname" string_arg •
+
+    $default  reduce using rule 44 (test)
+
+
+State 112
+
+   45 test: "-mmin" number_arg •
+
+    $default  reduce using rule 45 (test)
+
+
+State 113
+
+   46 test: "-mtime" number_arg •
+
+    $default  reduce using rule 46 (test)
+
+
+State 114
+
+   47 test: "-name" string_arg •
+
+    $default  reduce using rule 47 (test)
+
+
+State 115
+
+   48 test: "-newer" string_arg •
+
+    $default  reduce using rule 48 (test)
+
+
+State 116
+
+   49 test: "-newerXY" string_arg •
+
+    $default  reduce using rule 49 (test)
+
+
+State 117
+
+   52 test: "-path" string_arg •
+
+    $default  reduce using rule 52 (test)
+
+
+State 118
+
+   53 test: "-perm" string_arg •
+
+    $default  reduce using rule 53 (test)
+
+
+State 119
+
+   55 test: "-regex" string_arg •
+
+    $default  reduce using rule 55 (test)
+
+
+State 120
+
+   57 test: "-size" number_arg •
+
+    $default  reduce using rule 57 (test)
+
+
+State 121
+
+   59 test: "-type" string_arg •
+
+    $default  reduce using rule 59 (test)
+
+
+State 122
+
+   60 test: "-uid" number_arg •
+
+    $default  reduce using rule 60 (test)
+
+
+State 123
+
+   61 test: "-used" number_arg •
+
+    $default  reduce using rule 61 (test)
+
+
+State 124
+
+   62 test: "-user" string_arg •
+
+    $default  reduce using rule 62 (test)
+
+
+State 125
+
+   63 test: "-wholename" string_arg •
+
+    $default  reduce using rule 63 (test)
+
+
+State 126
+
+   65 test: "-xtype" string_arg •
+
+    $default  reduce using rule 65 (test)
+
+
+State 127
+
+   67 action: "-exec" exec_args •
+
+    $default  reduce using rule 67 (action)
+
+
+State 128
+
+   98 exec_args: set_lexer_exec_state • strings ";" unset_lexer_state
+
+    "string"  shift, and go to state 151
+
+    strings  go to state 152
+
+
+State 129
+
+   68 action: "-execdir" exec_args •
+
+    $default  reduce using rule 68 (action)
+
+
+State 130
+
+   69 action: "-fls" string_arg •
+
+    $default  reduce using rule 69 (action)
+
+
+State 131
+
+   70 action: "-fprint" string_arg •
+
+    $default  reduce using rule 70 (action)
+
+
+State 132
+
+   71 action: "-fprint0" string_arg •
+
+    $default  reduce using rule 71 (action)
+
+
+State 133
+
+   72 action: "-fprintf" string_arg •
+
+    $default  reduce using rule 72 (action)
+
+
+State 134
+
+   74 action: "-ok" exec_args •
+
+    $default  reduce using rule 74 (action)
+
+
+State 135
+
+   75 action: "-okdir" exec_args •
+
+    $default  reduce using rule 75 (action)
+
+
+State 136
+
+   78 action: "-printf" string_arg •
+
+    $default  reduce using rule 78 (action)
+
+
+State 137
+
+   82 global_option: "-files0-from" string_arg •
+
+    $default  reduce using rule 82 (global_option)
+
+
+State 138
+
+   85 global_option: "-maxdepth" number_arg •
+
+    $default  reduce using rule 85 (global_option)
+
+
+State 139
+
+   86 global_option: "-mindepth" number_arg •
+
+    $default  reduce using rule 86 (global_option)
+
+
+State 140
+
+   94 positional_option: "-regextype" string_arg •
+
+    $default  reduce using rule 94 (positional_option)
+
+
+State 141
+
+   18 unary_expression: "-not" primary •
+
+    $default  reduce using rule 18 (unary_expression)
+
+
+State 142
+
+   15 or_expression: binary_expression • "-or" and_expression
+   16 comma_expression: binary_expression • "," and_expression
+   20 group: "(" binary_expression • ")"
+
+    "-or"  shift, and go to state 145
+    ","    shift, and go to state 146
+    ")"    shift, and go to state 153
+
+
+State 143
+
+    7 starting_points: starting_points STARTING_POINT •
+
+    $default  reduce using rule 7 (starting_points)
+
+
+State 144
+
+    5 find_command: "find" starting_points binary_expression •  [$end, "find"]
+   15 or_expression: binary_expression • "-or" and_expression
+   16 comma_expression: binary_expression • "," and_expression
+
+    "-or"  shift, and go to state 145
+    ","    shift, and go to state 146
+
+    $default  reduce using rule 5 (find_command)
+
+
+State 145
+
+   15 or_expression: binary_expression "-or" • and_expression
+
+    "-amin"                   shift, and go to state 5
+    "-anewer"                 shift, and go to state 6
+    "-atime"                  shift, and go to state 7
+    "-cmin"                   shift, and go to state 8
+    "-cnewer"                 shift, and go to state 9
+    "-ctime"                  shift, and go to state 10
+    "-empty"                  shift, and go to state 11
+    "-executable"             shift, and go to state 12
+    "-false"                  shift, and go to state 13
+    "-fstype"                 shift, and go to state 14
+    "-gid"                    shift, and go to state 15
+    "-group"                  shift, and go to state 16
+    "-ilname"                 shift, and go to state 17
+    "-iname"                  shift, and go to state 18
+    "-inum"                   shift, and go to state 19
+    "-ipath"                  shift, and go to state 20
+    "-iregex"                 shift, and go to state 21
+    "-iwholename"             shift, and go to state 22
+    "-links"                  shift, and go to state 23
+    "-lname"                  shift, and go to state 24
+    "-mmin"                   shift, and go to state 25
+    "-mtime"                  shift, and go to state 26
+    "-name"                   shift, and go to state 27
+    "-newer"                  shift, and go to state 28
+    "-newerXY"                shift, and go to state 29
+    "-nogroup"                shift, and go to state 30
+    "-nouser"                 shift, and go to state 31
+    "-path"                   shift, and go to state 32
+    "-perm"                   shift, and go to state 33
+    "-readable"               shift, and go to state 34
+    "-regex"                  shift, and go to state 35
+    "-samefile"               shift, and go to state 36
+    "-size"                   shift, and go to state 37
+    "-true"                   shift, and go to state 38
+    "-type"                   shift, and go to state 39
+    "-uid"                    shift, and go to state 40
+    "-used"                   shift, and go to state 41
+    "-user"                   shift, and go to state 42
+    "-wholename"              shift, and go to state 43
+    "-writable"               shift, and go to state 44
+    "-xtype"                  shift, and go to state 45
+    "-delete"                 shift, and go to state 46
+    "-exec"                   shift, and go to state 47
+    "-execdir"                shift, and go to state 48
+    "-fls"                    shift, and go to state 49
+    "-fprint"                 shift, and go to state 50
+    "-fprint0"                shift, and go to state 51
+    "-fprintf"                shift, and go to state 52
+    "-ls"                     shift, and go to state 53
+    "-ok"                     shift, and go to state 54
+    "-okdir"                  shift, and go to state 55
+    "-print"                  shift, and go to state 56
+    "-print0"                 shift, and go to state 57
+    "-printf"                 shift, and go to state 58
+    "-prune"                  shift, and go to state 59
+    "-quit"                   shift, and go to state 60
+    "-depth"                  shift, and go to state 61
+    "-files0-from"            shift, and go to state 62
+    "-help"                   shift, and go to state 63
+    "-ignore_readdir_race"    shift, and go to state 64
+    "-maxdepth"               shift, and go to state 65
+    "-mindepth"               shift, and go to state 66
+    "-mount"                  shift, and go to state 67
+    "-noignore_readdir_race"  shift, and go to state 68
+    "-noleaf"                 shift, and go to state 69
+    "-xdev"                   shift, and go to state 70
+    "-daystart"               shift, and go to state 71
+    "-follow"                 shift, and go to state 72
+    "-nowarn"                 shift, and go to state 73
+    "-regextype"              shift, and go to state 74
+    "-warn"                   shift, and go to state 75
+    "-not"                    shift, and go to state 76
+    "("                       shift, and go to state 77
+
+    and_expression     go to state 154
+    unary_expression   go to state 84
+    group              go to state 85
+    primary            go to state 86
+    test               go to state 87
+    action             go to state 88
+    global_option      go to state 89
+    positional_option  go to state 90
+
+
+State 146
+
+   16 comma_expression: binary_expression "," • and_expression
+
+    "-amin"                   shift, and go to state 5
+    "-anewer"                 shift, and go to state 6
+    "-atime"                  shift, and go to state 7
+    "-cmin"                   shift, and go to state 8
+    "-cnewer"                 shift, and go to state 9
+    "-ctime"                  shift, and go to state 10
+    "-empty"                  shift, and go to state 11
+    "-executable"             shift, and go to state 12
+    "-false"                  shift, and go to state 13
+    "-fstype"                 shift, and go to state 14
+    "-gid"                    shift, and go to state 15
+    "-group"                  shift, and go to state 16
+    "-ilname"                 shift, and go to state 17
+    "-iname"                  shift, and go to state 18
+    "-inum"                   shift, and go to state 19
+    "-ipath"                  shift, and go to state 20
+    "-iregex"                 shift, and go to state 21
+    "-iwholename"             shift, and go to state 22
+    "-links"                  shift, and go to state 23
+    "-lname"                  shift, and go to state 24
+    "-mmin"                   shift, and go to state 25
+    "-mtime"                  shift, and go to state 26
+    "-name"                   shift, and go to state 27
+    "-newer"                  shift, and go to state 28
+    "-newerXY"                shift, and go to state 29
+    "-nogroup"                shift, and go to state 30
+    "-nouser"                 shift, and go to state 31
+    "-path"                   shift, and go to state 32
+    "-perm"                   shift, and go to state 33
+    "-readable"               shift, and go to state 34
+    "-regex"                  shift, and go to state 35
+    "-samefile"               shift, and go to state 36
+    "-size"                   shift, and go to state 37
+    "-true"                   shift, and go to state 38
+    "-type"                   shift, and go to state 39
+    "-uid"                    shift, and go to state 40
+    "-used"                   shift, and go to state 41
+    "-user"                   shift, and go to state 42
+    "-wholename"              shift, and go to state 43
+    "-writable"               shift, and go to state 44
+    "-xtype"                  shift, and go to state 45
+    "-delete"                 shift, and go to state 46
+    "-exec"                   shift, and go to state 47
+    "-execdir"                shift, and go to state 48
+    "-fls"                    shift, and go to state 49
+    "-fprint"                 shift, and go to state 50
+    "-fprint0"                shift, and go to state 51
+    "-fprintf"                shift, and go to state 52
+    "-ls"                     shift, and go to state 53
+    "-ok"                     shift, and go to state 54
+    "-okdir"                  shift, and go to state 55
+    "-print"                  shift, and go to state 56
+    "-print0"                 shift, and go to state 57
+    "-printf"                 shift, and go to state 58
+    "-prune"                  shift, and go to state 59
+    "-quit"                   shift, and go to state 60
+    "-depth"                  shift, and go to state 61
+    "-files0-from"            shift, and go to state 62
+    "-help"                   shift, and go to state 63
+    "-ignore_readdir_race"    shift, and go to state 64
+    "-maxdepth"               shift, and go to state 65
+    "-mindepth"               shift, and go to state 66
+    "-mount"                  shift, and go to state 67
+    "-noignore_readdir_race"  shift, and go to state 68
+    "-noleaf"                 shift, and go to state 69
+    "-xdev"                   shift, and go to state 70
+    "-daystart"               shift, and go to state 71
+    "-follow"                 shift, and go to state 72
+    "-nowarn"                 shift, and go to state 73
+    "-regextype"              shift, and go to state 74
+    "-warn"                   shift, and go to state 75
+    "-not"                    shift, and go to state 76
+    "("                       shift, and go to state 77
+
+    and_expression     go to state 155
+    unary_expression   go to state 84
+    group              go to state 85
+    primary            go to state 86
+    test               go to state 87
+    action             go to state 88
+    global_option      go to state 89
+    positional_option  go to state 90
+
+
+State 147
+
+   14 and_operator: "-and" •
+
+    $default  reduce using rule 14 (and_operator)
+
+
+State 148
+
+   12 and_expression: and_expression and_operator • unary_expression
+
+    "-amin"                   shift, and go to state 5
+    "-anewer"                 shift, and go to state 6
+    "-atime"                  shift, and go to state 7
+    "-cmin"                   shift, and go to state 8
+    "-cnewer"                 shift, and go to state 9
+    "-ctime"                  shift, and go to state 10
+    "-empty"                  shift, and go to state 11
+    "-executable"             shift, and go to state 12
+    "-false"                  shift, and go to state 13
+    "-fstype"                 shift, and go to state 14
+    "-gid"                    shift, and go to state 15
+    "-group"                  shift, and go to state 16
+    "-ilname"                 shift, and go to state 17
+    "-iname"                  shift, and go to state 18
+    "-inum"                   shift, and go to state 19
+    "-ipath"                  shift, and go to state 20
+    "-iregex"                 shift, and go to state 21
+    "-iwholename"             shift, and go to state 22
+    "-links"                  shift, and go to state 23
+    "-lname"                  shift, and go to state 24
+    "-mmin"                   shift, and go to state 25
+    "-mtime"                  shift, and go to state 26
+    "-name"                   shift, and go to state 27
+    "-newer"                  shift, and go to state 28
+    "-newerXY"                shift, and go to state 29
+    "-nogroup"                shift, and go to state 30
+    "-nouser"                 shift, and go to state 31
+    "-path"                   shift, and go to state 32
+    "-perm"                   shift, and go to state 33
+    "-readable"               shift, and go to state 34
+    "-regex"                  shift, and go to state 35
+    "-samefile"               shift, and go to state 36
+    "-size"                   shift, and go to state 37
+    "-true"                   shift, and go to state 38
+    "-type"                   shift, and go to state 39
+    "-uid"                    shift, and go to state 40
+    "-used"                   shift, and go to state 41
+    "-user"                   shift, and go to state 42
+    "-wholename"              shift, and go to state 43
+    "-writable"               shift, and go to state 44
+    "-xtype"                  shift, and go to state 45
+    "-delete"                 shift, and go to state 46
+    "-exec"                   shift, and go to state 47
+    "-execdir"                shift, and go to state 48
+    "-fls"                    shift, and go to state 49
+    "-fprint"                 shift, and go to state 50
+    "-fprint0"                shift, and go to state 51
+    "-fprintf"                shift, and go to state 52
+    "-ls"                     shift, and go to state 53
+    "-ok"                     shift, and go to state 54
+    "-okdir"                  shift, and go to state 55
+    "-print"                  shift, and go to state 56
+    "-print0"                 shift, and go to state 57
+    "-printf"                 shift, and go to state 58
+    "-prune"                  shift, and go to state 59
+    "-quit"                   shift, and go to state 60
+    "-depth"                  shift, and go to state 61
+    "-files0-from"            shift, and go to state 62
+    "-help"                   shift, and go to state 63
+    "-ignore_readdir_race"    shift, and go to state 64
+    "-maxdepth"               shift, and go to state 65
+    "-mindepth"               shift, and go to state 66
+    "-mount"                  shift, and go to state 67
+    "-noignore_readdir_race"  shift, and go to state 68
+    "-noleaf"                 shift, and go to state 69
+    "-xdev"                   shift, and go to state 70
+    "-daystart"               shift, and go to state 71
+    "-follow"                 shift, and go to state 72
+    "-nowarn"                 shift, and go to state 73
+    "-regextype"              shift, and go to state 74
+    "-warn"                   shift, and go to state 75
+    "-not"                    shift, and go to state 76
+    "("                       shift, and go to state 77
+
+    unary_expression   go to state 156
+    group              go to state 85
+    primary            go to state 86
+    test               go to state 87
+    action             go to state 88
+    global_option      go to state 89
+    positional_option  go to state 90
+
+
+State 149
+
+   97 number_arg: set_lexer_number_state "number" • unset_lexer_state
+
+    $default  reduce using rule 104 (unset_lexer_state)
+
+    unset_lexer_state  go to state 157
+
+
+State 150
+
+   96 string_arg: set_lexer_string_state "string" • unset_lexer_state
+
+    $default  reduce using rule 104 (unset_lexer_state)
+
+    unset_lexer_state  go to state 158
+
+
+State 151
+
+   99 strings: "string" •
+
+    $default  reduce using rule 99 (strings)
+
+
+State 152
+
+   98 exec_args: set_lexer_exec_state strings • ";" unset_lexer_state
+  100 strings: strings • "string"
+
+    ";"       shift, and go to state 159
+    "string"  shift, and go to state 160
+
+
+State 153
+
+   20 group: "(" binary_expression ")" •
+
+    $default  reduce using rule 20 (group)
+
+
+State 154
+
+   12 and_expression: and_expression • and_operator unary_expression
+   15 or_expression: binary_expression "-or" and_expression •  [$end, "find", "-or", ",", ")"]
+
+    "-and"  shift, and go to state 147
+
+    $end      reduce using rule 15 (or_expression)
+    "find"    reduce using rule 15 (or_expression)
+    "-or"     reduce using rule 15 (or_expression)
+    ","       reduce using rule 15 (or_expression)
+    ")"       reduce using rule 15 (or_expression)
+    $default  reduce using rule 13 (and_operator)
+
+    and_operator  go to state 148
+
+
+State 155
+
+   12 and_expression: and_expression • and_operator unary_expression
+   16 comma_expression: binary_expression "," and_expression •  [$end, "find", "-or", ",", ")"]
+
+    "-and"  shift, and go to state 147
+
+    $end      reduce using rule 16 (comma_expression)
+    "find"    reduce using rule 16 (comma_expression)
+    "-or"     reduce using rule 16 (comma_expression)
+    ","       reduce using rule 16 (comma_expression)
+    ")"       reduce using rule 16 (comma_expression)
+    $default  reduce using rule 13 (and_operator)
+
+    and_operator  go to state 148
+
+
+State 156
+
+   12 and_expression: and_expression and_operator unary_expression •
+
+    $default  reduce using rule 12 (and_expression)
+
+
+State 157
+
+   97 number_arg: set_lexer_number_state "number" unset_lexer_state •
+
+    $default  reduce using rule 97 (number_arg)
+
+
+State 158
+
+   96 string_arg: set_lexer_string_state "string" unset_lexer_state •
+
+    $default  reduce using rule 96 (string_arg)
+
+
+State 159
+
+   98 exec_args: set_lexer_exec_state strings ";" • unset_lexer_state
+
+    $default  reduce using rule 104 (unset_lexer_state)
+
+    unset_lexer_state  go to state 161
+
+
+State 160
+
+  100 strings: strings "string" •
+
+    $default  reduce using rule 100 (strings)
+
+
+State 161
+
+   98 exec_args: set_lexer_exec_state strings ";" unset_lexer_state •
+
+    $default  reduce using rule 98 (exec_args)
