@@ -1,4 +1,6 @@
-//fqparser_lexer.gtest.cpp
+#ifndef FINDQ_LEXER_GUARD
+#define FINDQ_LEXER_GUARD
+// findq_lexer_guard.h
 
 /*
 MIT License
@@ -24,38 +26,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#include "fqparser_lexer.h"
+// make sure redefinition happens just once using FlexLexer.h macro that guards yyFlexLexer class definition
+#ifndef yyFlexLexerOnce
+#  undef yyFlexLexer
+#  define yyFlexLexer FindqFlexLexer
+#  include "FlexLexer.h"
+#endif
 
-#include <unistd.h>
-#include <getopt.h>
-
-#include <sstream>
-#include <string>
-
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-
-#include "fqparser.bison.h"
-
-using namespace std;
-using namespace ::testing;
-
-namespace fqparser::testing {
-
-using symbol_kind = FQParser::symbol_kind;
-using token = FQParser::token;
-
-TEST(Lexer, test_0) {
-  stringstream s("find -empty");
-  Lexer lexer(s);
-
-  location loc{};
-
-  auto token = lexer.yylex(loc);
-  EXPECT_EQ(token.kind(), FQParser::symbol_kind::S_FIND);
-
-  EXPECT_EQ(lexer.yylex(loc).kind(), FQParser::symbol_kind::S_EMPTY);
-}
-
-}
+#endif
 

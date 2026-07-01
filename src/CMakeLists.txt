@@ -1,6 +1,6 @@
-# findql/src/CMakeLists.txt
+# findq/src/CMakeLists.txt
 
-project(findql_src)
+project(findq_src)
 
 include(FetchContent)
 
@@ -12,6 +12,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_subdirectory(fqparser.no_actions)
+add_subdirectory(grammar)
+add_subdirectory(lexer)
+add_subdirectory(parser)
 
 enable_testing()

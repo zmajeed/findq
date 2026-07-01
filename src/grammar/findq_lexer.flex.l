@@ -1,4 +1,4 @@
-/* fqparser.flex.l */
+/* findq_lexer.flex.l */
 
 /*
 MIT License
@@ -33,8 +33,8 @@ SOFTWARE.
  // custom c++ lexer class
 %option yyclass="Lexer"
 
- // custom prefix to rename yyFlexLexer class in flex header to FQFlexLexer
-%option prefix="FQParser"
+ // custom prefix to rename yyFlexLexer class in flex header to FindqFlexLexer
+%option prefix="Findq"
 
  // enable states stack
 %option stack
@@ -79,21 +79,21 @@ SOFTWARE.
 #include <string>
 
 // bison generated header with C++ namespace and token definitions
-#include "fqparser.bison.h"
-#include "lexer/fqparser_lexer.h"
+#include "findq_parser.bison.h"
+#include "lexer/findq_lexer.h"
 
 #undef YY_DECL
-#define YY_DECL fqparser::FQParser::symbol_type fqparser::Lexer::yylex(location& loc)
+#define YY_DECL findqparser::FindqParser::symbol_type findqparser::Lexer::yylex(location& loc)
 
 // fix flex error could not convert 0 from int to symbol_type for #define YY_NULL 0
 // caused by turning on bison %locations because symbol_type no longer has single int constructor for implicit conversion
 #define yyterminate() return symbol_type(YY_NULL, loc)
 
 using namespace std;
-using namespace fqparser;
+using namespace findqparser;
 
 // needed for custom yyterminate
-using symbol_type = FQParser::symbol_type;
+using symbol_type = FindqParser::symbol_type;
 
 %}
 
@@ -113,7 +113,7 @@ using symbol_type = FQParser::symbol_type;
 find {
   loc.columns(yyleng);
   yy_push_state(STARTING_POINTS_WHITESPACE);
-  return FQParser::make_FIND(loc);
+  return FindqParser::make_FIND(loc);
 }
 
 <STARTING_POINTS_WHITESPACE>{
@@ -137,7 +137,7 @@ find {
     yy_pop_state();
     loc.columns(yyleng);
     yy_push_state(STARTING_POINTS_WHITESPACE);
-    return FQParser::make_STARTING_POINT(yytext, loc);
+    return FindqParser::make_STARTING_POINT(yytext, loc);
   }
 }
 
@@ -145,357 +145,357 @@ find {
 
 -amin {
   loc.columns(yyleng);
-  return FQParser::make_AMIN(loc);
+  return FindqParser::make_AMIN(loc);
 }
 
 -and|-a {
   loc.columns(yyleng);
-  return FQParser::make_AND(loc);
+  return FindqParser::make_AND(loc);
 }
 
 -anewer {
   loc.columns(yyleng);
-  return FQParser::make_ANEWER(loc);
+  return FindqParser::make_ANEWER(loc);
 }
 
 -atime {
   loc.columns(yyleng);
-  return FQParser::make_ATIME(loc);
+  return FindqParser::make_ATIME(loc);
 }
 
 -cmin {
   loc.columns(yyleng);
-  return FQParser::make_CMIN(loc);
+  return FindqParser::make_CMIN(loc);
 }
 
 -cnewer {
   loc.columns(yyleng);
-  return FQParser::make_CNEWER(loc);
+  return FindqParser::make_CNEWER(loc);
 }
 
 -ctime {
   loc.columns(yyleng);
-  return FQParser::make_CTIME(loc);
+  return FindqParser::make_CTIME(loc);
 }
 
 -daystart {
   loc.columns(yyleng);
-  return FQParser::make_DAYSTART(loc);
+  return FindqParser::make_DAYSTART(loc);
 }
 
 -delete {
   loc.columns(yyleng);
-  return FQParser::make_DELETE(loc);
+  return FindqParser::make_DELETE(loc);
 }
 
 -depth {
   loc.columns(yyleng);
-  return FQParser::make_DEPTH(loc);
+  return FindqParser::make_DEPTH(loc);
 }
 
 -empty {
   loc.columns(yyleng);
-  return FQParser::make_EMPTY(loc);
+  return FindqParser::make_EMPTY(loc);
 }
 
 -exec {
   loc.columns(yyleng);
-  return FQParser::make_EXEC(loc);
+  return FindqParser::make_EXEC(loc);
 }
 
 -execdir {
   loc.columns(yyleng);
-  return FQParser::make_EXECDIR(loc);
+  return FindqParser::make_EXECDIR(loc);
 }
 
 -executable {
   loc.columns(yyleng);
-  return FQParser::make_EXECUTABLE(loc);
+  return FindqParser::make_EXECUTABLE(loc);
 }
 
 -false {
   loc.columns(yyleng);
-  return FQParser::make_FALSE(loc);
+  return FindqParser::make_FALSE(loc);
 }
 
 -files0-from {
   loc.columns(yyleng);
-  return FQParser::make_FILES0_FROM(loc);
+  return FindqParser::make_FILES0_FROM(loc);
 }
 
 -fls {
   loc.columns(yyleng);
-  return FQParser::make_FLS(loc);
+  return FindqParser::make_FLS(loc);
 }
 
 -follow {
   loc.columns(yyleng);
-  return FQParser::make_FOLLOW(loc);
+  return FindqParser::make_FOLLOW(loc);
 }
 
 -fstype {
   loc.columns(yyleng);
-  return FQParser::make_FSTYPE(loc);
+  return FindqParser::make_FSTYPE(loc);
 }
 
 -fprint {
   loc.columns(yyleng);
-  return FQParser::make_FPRINT(loc);
+  return FindqParser::make_FPRINT(loc);
 }
 
 -fprint0 {
   loc.columns(yyleng);
-  return FQParser::make_FPRINT0(loc);
+  return FindqParser::make_FPRINT0(loc);
 }
 
 -fprintf {
   loc.columns(yyleng);
-  return FQParser::make_FPRINTF(loc);
+  return FindqParser::make_FPRINTF(loc);
 }
 
 -gid {
   loc.columns(yyleng);
-  return FQParser::make_GID(loc);
+  return FindqParser::make_GID(loc);
 }
 
 -group {
   loc.columns(yyleng);
-  return FQParser::make_GROUP(loc);
+  return FindqParser::make_GROUP(loc);
 }
 
 -help {
   loc.columns(yyleng);
-  return FQParser::make_HELP(loc);
+  return FindqParser::make_HELP(loc);
 }
 
 -ignore_readdir_race {
   loc.columns(yyleng);
-  return FQParser::make_IGNORE_READDIR_RACE(loc);
+  return FindqParser::make_IGNORE_READDIR_RACE(loc);
 }
 
 -ilname {
   loc.columns(yyleng);
-  return FQParser::make_ILNAME(loc);
+  return FindqParser::make_ILNAME(loc);
 }
 
 -iname {
   loc.columns(yyleng);
-  return FQParser::make_INAME(loc);
+  return FindqParser::make_INAME(loc);
 }
 
 -inum {
   loc.columns(yyleng);
-  return FQParser::make_INUM(loc);
+  return FindqParser::make_INUM(loc);
 }
 
 -ipath {
   loc.columns(yyleng);
-  return FQParser::make_IPATH(loc);
+  return FindqParser::make_IPATH(loc);
 }
 
 -iregex {
   loc.columns(yyleng);
-  return FQParser::make_IREGEX(loc);
+  return FindqParser::make_IREGEX(loc);
 }
 
 -iwholename {
   loc.columns(yyleng);
-  return FQParser::make_IWHOLENAME(loc);
+  return FindqParser::make_IWHOLENAME(loc);
 }
 
 -links {
   loc.columns(yyleng);
-  return FQParser::make_LINKS(loc);
+  return FindqParser::make_LINKS(loc);
 }
 
 -lname {
   loc.columns(yyleng);
-  return FQParser::make_LNAME(loc);
+  return FindqParser::make_LNAME(loc);
 }
 
 -ls {
   loc.columns(yyleng);
-  return FQParser::make_LS(loc);
+  return FindqParser::make_LS(loc);
 }
 
 -maxdepth {
   loc.columns(yyleng);
-  return FQParser::make_MAXDEPTH(loc);
+  return FindqParser::make_MAXDEPTH(loc);
 }
 
 -mindepth {
   loc.columns(yyleng);
-  return FQParser::make_MINDEPTH(loc);
+  return FindqParser::make_MINDEPTH(loc);
 }
 
 -mmin {
   loc.columns(yyleng);
-  return FQParser::make_MMIN(loc);
+  return FindqParser::make_MMIN(loc);
 }
 
 -mtime {
   loc.columns(yyleng);
-  return FQParser::make_MTIME(loc);
+  return FindqParser::make_MTIME(loc);
 }
 
 -name {
   loc.columns(yyleng);
-  return FQParser::make_NAME(loc);
+  return FindqParser::make_NAME(loc);
 }
 
 -newer {
   loc.columns(yyleng);
-  return FQParser::make_NEWER(loc);
+  return FindqParser::make_NEWER(loc);
 }
 
 -newerXY {
   loc.columns(yyleng);
-  return FQParser::make_NEWERXY(loc);
+  return FindqParser::make_NEWERXY(loc);
 }
 
 -nogroup {
   loc.columns(yyleng);
-  return FQParser::make_NOGROUP(loc);
+  return FindqParser::make_NOGROUP(loc);
 }
 
 -not|! {
   loc.columns(yyleng);
-  return FQParser::make_NOT(loc);
+  return FindqParser::make_NOT(loc);
 }
 
 -nouser {
   loc.columns(yyleng);
-  return FQParser::make_NOUSER(loc);
+  return FindqParser::make_NOUSER(loc);
 }
 
 -ok {
   loc.columns(yyleng);
-  return FQParser::make_OK(loc);
+  return FindqParser::make_OK(loc);
 }
 
 -okdir {
   loc.columns(yyleng);
-  return FQParser::make_OKDIR(loc);
+  return FindqParser::make_OKDIR(loc);
 }
 
 -or|-o {
   loc.columns(yyleng);
-  return FQParser::make_OR(loc);
+  return FindqParser::make_OR(loc);
 }
 
 -perm {
   loc.columns(yyleng);
-  return FQParser::make_PERM(loc);
+  return FindqParser::make_PERM(loc);
 }
 
 -prune {
   loc.columns(yyleng);
-  return FQParser::make_PRUNE(loc);
+  return FindqParser::make_PRUNE(loc);
 }
 
 -path {
   loc.columns(yyleng);
-  return FQParser::make_PATH(loc);
+  return FindqParser::make_PATH(loc);
 }
 
 -print {
   loc.columns(yyleng);
-  return FQParser::make_PRINT(loc);
+  return FindqParser::make_PRINT(loc);
 }
 
 -print0 {
   loc.columns(yyleng);
-  return FQParser::make_PRINT0(loc);
+  return FindqParser::make_PRINT0(loc);
 }
 
 -printf {
   loc.columns(yyleng);
-  return FQParser::make_PRINTF(loc);
+  return FindqParser::make_PRINTF(loc);
 }
 
 -prune {
   loc.columns(yyleng);
-  return FQParser::make_PRUNE(loc);
+  return FindqParser::make_PRUNE(loc);
 }
 
 -quit {
   loc.columns(yyleng);
-  return FQParser::make_QUIT(loc);
+  return FindqParser::make_QUIT(loc);
 }
 
 -readable {
   loc.columns(yyleng);
-  return FQParser::make_READABLE(loc);
+  return FindqParser::make_READABLE(loc);
 }
 
 -regex {
   loc.columns(yyleng);
-  return FQParser::make_REGEX(loc);
+  return FindqParser::make_REGEX(loc);
 }
 
 -samefile {
   loc.columns(yyleng);
-  return FQParser::make_SAMEFILE(loc);
+  return FindqParser::make_SAMEFILE(loc);
 }
 
 -size {
   loc.columns(yyleng);
-  return FQParser::make_SIZE(loc);
+  return FindqParser::make_SIZE(loc);
 }
 
 -true {
   loc.columns(yyleng);
-  return FQParser::make_TRUE(loc);
+  return FindqParser::make_TRUE(loc);
 }
 
 -type {
   loc.columns(yyleng);
-  return FQParser::make_TYPE(loc);
+  return FindqParser::make_TYPE(loc);
 }
 
 -uid {
   loc.columns(yyleng);
-  return FQParser::make_UID(loc);
+  return FindqParser::make_UID(loc);
 }
 
 -used {
   loc.columns(yyleng);
-  return FQParser::make_USED(loc);
+  return FindqParser::make_USED(loc);
 }
 
 -user {
   loc.columns(yyleng);
-  return FQParser::make_USER(loc);
+  return FindqParser::make_USER(loc);
 }
 
 -wholename {
   loc.columns(yyleng);
-  return FQParser::make_WHOLENAME(loc);
+  return FindqParser::make_WHOLENAME(loc);
 }
 
 -writable {
   loc.columns(yyleng);
-  return FQParser::make_WRITABLE(loc);
+  return FindqParser::make_WRITABLE(loc);
 }
 
 -xtype {
   loc.columns(yyleng);
-  return FQParser::make_XTYPE(loc);
+  return FindqParser::make_XTYPE(loc);
 }
 
 "," {
   loc.columns(yyleng);
-  return FQParser::make_COMMA(loc);
+  return FindqParser::make_COMMA(loc);
 }
 
 "(" {
   loc.columns(yyleng);
-  return FQParser::make_LEFT_PAREN(loc);
+  return FindqParser::make_LEFT_PAREN(loc);
 }
 
 ")" {
   loc.columns(yyleng);
-  return FQParser::make_RIGHT_PAREN(loc);
+  return FindqParser::make_RIGHT_PAREN(loc);
 }
 
  /* match newlines separately to correctly update line numbers */
@@ -521,14 +521,14 @@ find {
 <STRING_ARG>{
   [^"'][^[:space:]]* {
     loc.columns(yyleng);
-    return FQParser::make_STRING_ARG(yytext, loc);
+    return FindqParser::make_STRING_ARG(yytext, loc);
   }
 
  /* assumes multiline string literals are not allowed */
   (?x: ["] ( ( [^"\n] | \\["] | \\\\ )* ["] ) | ( ['] ( [^'\n] | \\['] | \\\\ )* ['] ) ) {
     yy_pop_state();
     loc.columns(yyleng);
-    return FQParser::make_STRING_ARG(string(yytext + 1, yyleng - 2), loc);
+    return FindqParser::make_STRING_ARG(string(yytext + 1, yyleng - 2), loc);
   }
 }
 
@@ -554,7 +554,7 @@ find {
       sign = -1;
       ++digitStart;
     }
-    return FQParser::make_NUMBER_ARG({.val = (uint64_t)atoll(digitStart), .sign = sign}, loc);
+    return FindqParser::make_NUMBER_ARG({.val = (uint64_t)atoll(digitStart), .sign = sign}, loc);
   }
 }
 
@@ -571,20 +571,20 @@ find {
   [^";][^[:space:]]* {
     yy_pop_state();
     loc.columns(yyleng);
-    return FQParser::make_STRING_ARG(yytext, loc);
+    return FindqParser::make_STRING_ARG(yytext, loc);
   }
 
  /* assumes multiline string literals are not allowed */
   (?x: ["] ( [^"\n] | \\["] | \\\\ )* ["] ) {
     yy_pop_state();
     loc.columns(yyleng);
-    return FQParser::make_STRING_ARG(string(yytext + 1, yyleng - 2), loc);
+    return FindqParser::make_STRING_ARG(string(yytext + 1, yyleng - 2), loc);
   }
 
   ";" {
     yy_pop_state();
     loc.columns(yyleng);
-    return FQParser::make_SEMICOLON(loc);
+    return FindqParser::make_SEMICOLON(loc);
   }
 
 }
@@ -604,10 +604,10 @@ find {
   .+ {
     BEGIN(0);
     loc.columns(yyleng);
-    throw FQParser::syntax_error(loc, "bad input \""s + errChar + yytext + "\""s + " flex state " + to_string(errState));
+    throw FindqParser::syntax_error(loc, "bad input \""s + errChar + yytext + "\""s + " flex state " + to_string(errState));
   }
 }
 
 %%
 
-#include "lexer/fqparser_lexer_methods.h"
+#include "lexer/findq_lexer_methods.h"

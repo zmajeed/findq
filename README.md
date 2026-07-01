@@ -1,4 +1,4 @@
-# findql
+# FindQ
 A grammar and parser for the predicate expression language used by GNU find
 
 ## A grammar for `find`
@@ -9,7 +9,7 @@ The `find` DSL is used to match filesystem objects by forming boolean expression
 
 Predicates can be grouped and nested arbitrarily.
 
-This `findql` repo has a Bison grammar and LALR(1) parser for the `find` language.
+This `findq` repo has a Bison grammar and LALR(1) parser for the `find` language.
 
 ## A parser for `find`
 
@@ -44,7 +44,7 @@ A `find` expression is composed of primaries like `-name`, `-type` and `-exec`. 
 
 Nearly all primaries start with dash `-`. This makes them look like commandline options. In fact, primaries are not options but arguments to the `find` command that together form a predicate expression.  Some operators do not have a dash prefix. These are the negation operator `!` though it's an alias for `-not`, the grouping operators `(` and `)`, and the comma operator `,`. Also the `-and` operator is implied if there isn't any other operator between two primaries.
 
-The `findql` grammar below is for the language described in the GNU Findutils manual. The terminology is from the manual. Symbols in all-caps or in quotes are lexical tokens.
+The `findq` grammar below is for the language described in the GNU Findutils manual. The terminology is from the manual. Symbols in all-caps or in quotes are lexical tokens.
 
 
 ```
