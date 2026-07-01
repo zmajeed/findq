@@ -21,7 +21,7 @@ The `findtojson.sh` tool in `src/tools` converts file stats data obtained from `
 
 The idea is to run the tool once on real filesystems. Then use the JSON data for testing without a filesystem.
 
-## Build And test
+## Build and test
 
 Build with cmake then make
 
@@ -38,9 +38,9 @@ ctest --test-dir build
 
 ## The `find` expression language
 
-The `find` expression language is described in detail in Section 2.1 of the GNU Findutils manual https://www.gnu.org/software/findutils/manual/html_mono/find.html. It's also in the Posix spec is at https://pubs.opengroup.org/onlinepubs/9699919799/utilities/find.html.
+The `find` expression language is described in detail in Section 2.1 of the GNU Findutils manual https://www.gnu.org/software/findutils/manual/html_mono/find.html. It's also in the Posix spec at https://pubs.opengroup.org/onlinepubs/9699919799/utilities/find.html.
 
-A `find` expression is composed of primaries like `-name`, `-type` and `-exec`. There are four kinds of primaries. Tests like `-name` and `type` that are true or false based on a property of the file. Actions like `-exec` and `-print` that perform an action that has side effects. Operators like `-and` and `-or` that affect the evaluation of other primaries. And options like `-depth` and `regextype` that affect the processing of all files rather than a single file.
+A `find` expression is composed of primaries like `-name`, `-type` and `-exec`. There are four kinds of primaries. Tests like `-name` and `-type` that are true or false based on a property of the file. Actions like `-exec` and `-print` that perform an action that has side effects. Operators like `-and` and `-or` that affect the evaluation of other primaries. And options like `-depth` and `regextype` that affect the processing of all files rather than a single file.
 
 Nearly all primaries start with dash `-`. This makes them look like commandline options. But primaries are not options but arguments to the `find` command that together make up a predicate expression.  Some operators do not have a dash prefix. These are the negation operator `!` though it's an alias for `-not`, the grouping operators `(` and `)`, and the comma operator `,`. Also the `-and` operator is implied if there isn't any other operator between two primaries.
 
@@ -156,3 +156,41 @@ exec_args: strings ";"
 strings: "string" | strings "string"
 
 ```
+
+## `find` usage
+
+There are 3 parts to a `find` command. First there are a few commandline options like `-H` for not following symlinks, `-D` for debugging, and others. These are options just like for any other Linux command and do not belong to the expression language. Next `find` can be given a list of paths that are often directories but can be any files. These are called starting points and form the roots of the file/directory trees traversed by `find`. If a starting point is not given, it defaults to the current directory. The last part of a `find` command is the `find` expression that comprises all remaining commandline arguments.
+
+Since the `find` commandline is typically first processed by a shell, any characters special to the shell like parentheses, semicolons or globs must be escaped or quoted. We'll assume for our purposes there's no shell involved and no need to escape anything in the examples below.
+
+The `-print` action is implied in the absence of any other actions. Also the `-and` operator is implied if no operator is present between two primaries.
+
+## What does `print` do?
+
+The `-print` action is special. It prints the current filepath. Its behavior can be confusing because it's the default action that is inhibited when other actions are present.
+
+## Debugging `find`
+
+
+## `find` examples
+
+Find all regular files.
+
+The starting point is explicitly given as the current directory. There's just one primary here, `-type`, that takes a string argument. The default action `-print` prints all matching entries.
+```
+find . -type f
+```
+
+Find all files that match the glob pattern `*.c`, i.e. with a `.c` suffix. Strictly this matches directories too since there's no restriction on file type.
+```
+find . -name "*.c"
+```
+
+Find files ending in `.c` or `.cpp`
+```
+find . -name "*.c" -o -name "*.cpp"
+```
+
+Find 
+find . -name .git -prune -o -name ""
+

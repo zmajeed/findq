@@ -3,7 +3,7 @@
 /*
 MIT License
 
-Copyright (c) 2024 Zartaj Majeed
+Copyright (c) 2024-2026 Zartaj Majeed
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -535,11 +535,6 @@ int main(int argc, char* argv[])
 
   lexer.set_debug(debug);
   parser.set_debug_level(debug);
-
-  if(auto ev = parser(); ev != 0) {
-    printf("parse failed\n");
-    return ev;
-  }
 
   if(auto ev = parser(); ev != 0) {
     fputs("parse failed\n", stderr);
